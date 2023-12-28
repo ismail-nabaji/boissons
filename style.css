@@ -1,0 +1,62 @@
+body {
+    margin: 0; 
+}
+
+.nav {
+
+    background-color: aquamarine;
+    overflow: hidden;
+    width:100%;
+    border: 2px solid black;
+}
+
+ul {
+    display: flex;
+    justify-content: flex-end;
+    list-style-type: none;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+
+}
+
+li {
+
+    display: inline-block;
+    padding: 0px 12px;
+}
+
+li a {
+
+    text-align: center;
+    padding: 24px 16px;
+    display: block;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: grey;
+    color: white;
+}
+
+.logo{
+
+    margin: 0px 80px;
+}
+
+li .user{
+
+    margin-right: 10px;
+}
+
+li.user:hover{
+
+    background-color: grey;
+    color: white;
+}
+
+li.panier:hover{
+
+    background-color: grey;
+    color: white;
+}

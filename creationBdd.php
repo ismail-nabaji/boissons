@@ -33,9 +33,7 @@
             nomCocktail varchar(100) NOT NULL,
             preparationCocktail varchar(1000) NOT NULL,
             ingredients varchar(800) NOT NULL,
-            nomAlimentsC varchar(200) NOT NULL,
-            PRIMARY KEY(nomCocktail),
-            CONSTRAINT key_alimentC FOREIGN KEY(nomAlimentsC) REFERENCES Aliment(nomAliment)
+            PRIMARY KEY(nomCocktail)
         );
     ";
     $stmt = $mysqli->prepare($requete);
@@ -48,15 +46,15 @@
         CREATE TABLE IF NOT EXISTS Utilisateur(
             login varchar(50) NOT NULL,
             mdp varchar(50) NOT NULL,
-            nom varchar(50) NOT NULL,
-            prenom varchar(50) NOT NULL,
-            sexe char(1) NOT NULL,
-            numTel varchar(10) NOT NULL,
-            dateNaissance varchar(50) NOT NULL,
-            mail varchar(50) NOT NULL,
-            adresse varchar(50) NOT NULL,
+            nom varchar(50) ,
+            prenom varchar(50) ,
+            sexe char(1) ,
+            numTel varchar(10) ,
+            dateNaissance varchar(50) ,
+            mail varchar(50) ,
+            adresse varchar(50) ,
             codePostal varchar(5),
-            ville varchar(50) NOT NULL,    
+            ville varchar(50) ,    
             PRIMARY KEY (login)
         );    
     ";
@@ -98,26 +96,49 @@
     $stmt->execute();
 
 
-    //Remplissage des catégories
-    foreach ($Hierarchie as $nom => $alimentT){
-        if (isset($alimentT['super-categorie'])){
-            foreach ($alimentT['super-categorie'] as $cat => $pere){
-                $stmt = $mysqli->prepare("INSERT INTO Aliment(nomAliment, pereAliment) values (?,?)");
-                $stmt->bind_param("ss", $nom, $pere);
-                $stmt->execute();
-                mysqli_stmt_close($stmt);
+   
+foreach ($Hierarchie as $nom => $alimentT){
+    if (isset($alimentT['super-categorie'])){
+        foreach ($alimentT['super-categorie'] as $cat => $pere){
+            // Vérification de l'existence de l'aliment avant l'insertion
+            $stmt_check = $mysqli->prepare("SELECT nomAliment FROM Aliment WHERE nomAliment = ?");
+            $stmt_check->bind_param("s", $nom);
+            $stmt_check->execute();
+            $result = $stmt_check->get_result();
+
+            if ($result->num_rows == 0) { // Si l'aliment n'existe pas encore, on l'insère
+                $stmt_insert = $mysqli->prepare("INSERT INTO Aliment(nomAliment, pereAliment) values (?, ?)");
+                $stmt_insert->bind_param("ss", $nom, $pere);
+                $stmt_insert->execute();
+                mysqli_stmt_close($stmt_insert);
             }
+
+            mysqli_stmt_close($stmt_check);
         }
     }
+}
 
-    //Remplissage des cocktails
-    foreach ($Recettes as $tmp => $cocktail){
-        $string = implode('|', $cocktail['index']);
-        $stmt = $mysqli->prepare("INSERT INTO Cocktail(nomCocktail, preparationCocktail, ingredients, nomAlimentsC) values (?,?,?,?)");
-        $stmt->bind_param("ssss", $cocktail['titre'], $cocktail['ingredients'], $cocktail['preparation'], $string);
-        $stmt->execute();
-        mysqli_stmt_close($stmt);
+  // Parcours des recettes
+  foreach ($Recettes as $cocktail) {
+    $nomCocktail = $cocktail['titre'];
+
+    // Vérifier si le cocktail existe déjà dans la table 'Cocktail'
+    $query = "SELECT COUNT(*) AS count FROM Cocktail WHERE nomCocktail = ?";
+    $stmt_check = $mysqli->prepare($query);
+    $stmt_check->bind_param("s", $nomCocktail);
+    $stmt_check->execute();
+    $result = $stmt_check->get_result();
+    $row = $result->fetch_assoc();
+
+    if ($row['count'] == 0) {
+        // Le cocktail n'existe pas, donc on peut l'insérer
+        $stmt_insert_cocktail = $mysqli->prepare("INSERT INTO Cocktail(nomCocktail, preparationCocktail, ingredients) VALUES (?, ?, ?)");
+        $stmt_insert_cocktail->bind_param("sss", $cocktail['titre'], $cocktail['preparation'], $cocktail['ingredients']);
+        $stmt_insert_cocktail->execute();
+        $stmt_insert_cocktail->close();
     }
+}
+
 
     mysqli_close($mysqli);    
 
