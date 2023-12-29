@@ -54,6 +54,7 @@
                             </li>
                             <li><a href="panier.php">Panier</a></li>
                             <li><a href="inscription.php">Inscription</a></li>
+                        <li><a href="conexion.php">Conexion</a></li>
 
                             
                         </ul>
