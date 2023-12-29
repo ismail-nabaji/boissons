@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-      <title>Inscription</title>
-	<meta charset="utf-8" />
+    <title>Boisson</title>  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-      <style>
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+    <style>
 
             body{
 
@@ -47,12 +48,11 @@
 
             #connexion {
 
-                  font-size: 18px;
+                
                   align-items:center;
                   display:block;
                   margin:auto;
-                  border: 2px solid #000; /* Bordure */
-                  background-color:#1DD513;
+
                   margin-bottom:10px;
             }
 
@@ -96,9 +96,7 @@
             }
 
       </style>
-
 </head>
-
 <?php
 try {
     $pgDB = new PDO('mysql:host=127.0.0.1;dbname=Cocktails', 'root', '');
@@ -156,96 +154,89 @@ if (isset($_POST['connexion'])) {
 }
 ?>
 
+<body class="is-preload">
+
+    <div id="wrapper">
+        <div id="main">
+            <div class="inner">
+
+                <!-- Header -->
+                <header id="header">
+                    <a href="index.php" class="logo"><strong>Boissons</strong> by Nabaji & Zouari</a>
+                
+                </header>
+
+                <section>
+                <h2>Inscription</h2>
+
+                
+                    <form id="loginPage" method="post" action="#">
+                        <fieldset>
+                            <label for="id" class="label" id="labelId">Identifiant*</label>
+                            <input type="text" id="id" name="id" required><br>
+                            
+
+                            <label for="password" class="label" id="labelPwd">Mot de passe*</label>
+                            <input type="password" id="password" name="password" required><br>
+
+                            <label for="nom" class="label" id="labelNom">Nom</label>
+                            <input type="text" id="nom" name="nom">
+
+                            <label for="prenom" class="label">Prénom</label>
+                            <input type="text" id="prenom" name="prenom"><br>
+
+                            <div class="sexe-labels">
+                                <label for="sexe" class="label">Homme</label>
+                                <input type="radio" id="sexe" name="sexe" value="h">
+
+                                <label for="sexe" class="label">Femme</label>
+                                <input type="radio" id="sexe" name="sexe" value="f">
+
+                                <label for="sexe" class="label">Autre</label>
+                                <input type="radio" id="sexe" name="sexe" value="a">
+                            </div><br>
+
+                            <label for="numTel" class="label">Numéro de téléphone :</label>
+                            <input type="tel" id="numTel" name="numTel" pattern="[0-9]{10}" placeholder="Entrez votre numéro de téléphone"><br>
+
+                            <label for="birthDate" class="label" id="labelBd">Date de naissance</label>
+                            <input type="date" id="birthDate" name="birthDate"><br>
+
+                            <label for="mail" class="label" id="labelMail">E-Mail</label>
+                            <input type="email" id="mail" name="mail"><br>
+
+                            <label for="adresse" class="label">Adresse</label>
+                            <input type="text" id="adresse" name="adresse">
+
+                            <label for="codePostal" class="label" id="labelCodePostal">Code Postal</label>
+                            <input type="text" id="codePostal" name="codePostal">
+
+                            <label for="ville" class="label" id="labelVille">Ville</label>
+                            <input type="text" id="ville" name="ville"><br>
+
+                            <input type="submit" id="connexion" name="inscription" class="button large" value="S'inscrire">
+                        </fieldset>
+                    </form>
 
 
-<body>
+                    <div class="labelConnexion">
+                            <a href="connexion.php" class="labelConnexion">Vous avez déja un compte ? Cliquez ici pour vous connecter.</a>
+                    </div>
 
-      <?php include 'navbar.php';?>
-
-      <form id="loginPage" method="post" action="#">
-
-            <fieldset>
-
-            <legend>Inscription</legend>
-
-                  <label for="id" id="labelId">Identifiant*</label>
-                  <input type="text" id="id" name="id" required> <br>
-
-                  <label for="password" id="labelPwd">Mot de passe*</label>
-                  <input type="password" id="password" name="password" required> <br>
-
-            
-
-                  <label for="nom" id="labelNom">Nom</label>
-                  <input type="text" id="nom" name="nom" >
-
-                 
-
-                  <label for="prenom">Prénom</label>
-                  <input type="text" id="prenom" name="prenom" > <br>
-
-                  <div class="sexe-labels">
-
-                        <label for="sexe">Homme</label>
-                        <input type="radio" id="sexe" name="h" value="h">
-
-                        <label for="sexe">Femme</label>
-                        <input type="radio" id="sexe" name="f" value="f">
-
-                        <label for="sexe">Autre</label>
-                        <input type="radio" id="sexe" name="a" value="a">
-
-                  </div>   <br>
-
-                  <label for="numTel">Numéro de téléphone :</label>
-                  <input type="tel" id="numTel" name="numTel" pattern="[0-9]{10}" placeholder="Entrez votre numéro de téléphone"> <br>
-
-          
-
-                  <label for="birthDate" id="labelBd">Date de naissance</label>
-                  <input type="date" id="birthDate" name="birthDate"> <br>
-
-              
-
-                  <label for="mail" id="labelMail">E-Mail</label>
-                  <input type="email" id="mail" name="mail"> <br>
-
-        
-
-                  <label for="adresse">Adresse</label>
-                  <input type="text" id="adresse" name="adresse" >
-
+                    
+                </section>
+            </div>
+        </div>
+        <?php include 'sidebar.php'; ?>
+    </div>
     
-
-                  <label for="codePostal" id="labelCodePostal">Code Postal</label>
-                  <input type="text" id="codePostal" name="codePostal">
-
-            
-
-                  <label for="ville" id="labelVille">Ville</label>
-                  <input type="text" id="ville" name="ville"> <br>
-
-                  <input type="submit" id="connexion" name="connexion" value="S'inscrire">
-
-            </fieldset>
-
-      </form>
-
-      <div class="labelConnexion">
-            <a href="connexion.php" class="labelConnexion">Vous avez déja un compte ? Cliquez ici pour se connecter.</a>
-      </div>
-
-      <?php $stmt = $pgDB->prepare("SELECT * FROM Utilisateur WHERE login = :login");
-            $stmt->bindParam(':login', $id, PDO::PARAM_STR);
-            $stmt->execute();
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if($user){
-
-                  echo "<p>Nom d'utilisateur déjà utilisé, veuillez en utiliser un autre.</p>";
-            }     
-        ?>
+            <script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
 
 </body>
+    
 
 </html>
